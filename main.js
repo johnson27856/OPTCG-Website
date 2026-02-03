@@ -81,14 +81,22 @@ function populateSetDropdown() {
     const select = document.createElement('select');
     select.id = 'set-select';
 
+    const selectedSet = localStorage.getItem('selectedSet');
+
     setIds.forEach(id => {
         const opt = document.createElement('option');
         opt.value = id;
         opt.textContent = id;
+
+        if (id === selectedSet) {
+            opt.selected = true;
+        }
+
         select.appendChild(opt);
     });
 
     select.addEventListener('change', (e) => {
+        localStorage.setItem('selectedSet', e.target.value);
         loadSet(e.target.value);
     });
 
