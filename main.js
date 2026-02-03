@@ -2,7 +2,17 @@
 const setIds = [
     'OP-01',
     'OP-02',
-    'OP-03'
+    'OP-03',
+    'OP-04',
+    'OP-05',
+    'OP-06',
+    'OP-07',
+    'OP-08',
+    'OP-09',
+    'OP-10',
+    'OP-11',
+    'OP-12',
+    'OP-13'
 ];
 
 // Loads all cards in the specified set
@@ -47,6 +57,16 @@ async function loadSet(setId) {
     }
 }
 
+function showLoading(message) {
+    const container = document.getElementById('card-container');
+    if (!container) return;
+    container.innerHTML = '';
+    const p = document.createElement('p');
+    p.id = 'loading';
+    p.textContent = message;
+    container.appendChild(p);
+}
+
 function populateSetDropdown() {
     const controls = document.getElementById('set-controls');
     if (!controls) return;
@@ -76,41 +96,12 @@ function populateSetDropdown() {
     controls.appendChild(select);
 }
 
-function clearCards() {
-    const container = document.getElementById('card-container');
-    if (container) container.innerHTML = '';
-}
-
-function showLoading(message) {
-    const container = document.getElementById('card-container');
-    if (!container) return;
-    container.innerHTML = '';
-    const p = document.createElement('p');
-    p.id = 'loading';
-    p.textContent = message;
-    container.appendChild(p);
-}
-
-// Initialize after DOM loads
-document.addEventListener('DOMContentLoaded', () => {
-    populateSetDropdown();
-    const select = document.getElementById('set-select');
-    const defaultSet = select ? select.value : setIds[0];
-    loadSet(defaultSet);
-
-    initResizer();
-});
-
 // Make the left panel resizable by dragging the vertical resizer
 function initResizer() {
     const resizer = document.getElementById('resizer');
     const leftPanel = document.getElementById('left-panel');
     const panes = document.querySelector('.panes');
     if (!resizer || !leftPanel || !panes) return;
-
-    // Restore persisted width if present
-    const savedWidth = localStorage.getItem('leftPanelWidth');
-    if (savedWidth) leftPanel.style.width = savedWidth;
 
     let isResizing = false;
     const minWidth = 200;
@@ -131,7 +122,6 @@ function initResizer() {
         isResizing = false;
         document.body.style.cursor = '';
         resizer.classList.remove('active');
-        localStorage.setItem('leftPanelWidth', leftPanel.style.width);
         document.removeEventListener('mousemove', onPointerMove);
         document.removeEventListener('mouseup', stopResize);
         document.removeEventListener('touchmove', onPointerMove);
@@ -147,6 +137,7 @@ function initResizer() {
         document.addEventListener('mouseup', stopResize);
     });
 
+    // For mobile
     resizer.addEventListener('touchstart', function (e) {
         e.preventDefault();
         isResizing = true;
@@ -156,3 +147,13 @@ function initResizer() {
         document.addEventListener('touchend', stopResize);
     });
 }
+
+// Initialize after DOM loads
+document.addEventListener('DOMContentLoaded', () => {
+    populateSetDropdown();
+    const select = document.getElementById('set-select');
+    const defaultSet = select ? select.value : setIds[0];
+    loadSet(defaultSet);
+
+    initResizer();
+});
