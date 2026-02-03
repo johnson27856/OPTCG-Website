@@ -7,8 +7,8 @@ body {
     padding: 0;
     min-height: 100vh;
 
-    /* Use flex column so header & controls size naturally */
-    /* The scrollable area will fill the remaining space. */
+    /* Use flex column so header + controls size naturally
+    and the scrollable area fills the remaining space */
     display: flex;
     flex-direction: column;
 
@@ -57,7 +57,7 @@ body {
 
 /* Deck builder scrolling */
 .scrollable {
-    padding: 10px;
+    padding: 0px 10px 10px 10px;
 
     /* Fill remaining vertical space inside left-panel */
     flex: 1 1 auto;
@@ -72,6 +72,8 @@ body {
     overflow-y: auto;
     background-color: rgba(128,128,128,0.9);
     margin: 0;
+
+    scrollbar-color: rgba(0, 0, 0, 0.5) transparent;
 }
 
 .card {
@@ -118,8 +120,8 @@ body {
 }
 
 .controls {
-    padding: 8px 10px;
-    background-color: rgba(255,255,255,0.9);
+    padding: 6px 16px;
+    background-color: rgba(128,128,128,0.9);
     width: 100%;
     box-sizing: border-box;
     display: flex;
