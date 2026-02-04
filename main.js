@@ -25,25 +25,44 @@ async function loadSet(setId) {
         if (!res.ok) throw new Error(`Set request failed: ${res.status}`);
 
         const cards = await res.json(); // expect an array of card objects
-        const loadPromises = cards.map(card => new Promise(resolve => {
+        // const loadPromises = cards.map(card => new Promise(resolve => {
+        //     const img = document.createElement('img');
+        //     img.className = 'card';
+        //     img.alt = card.card_set_id;
+        //     img.src = card.card_image;
+
+        //     // Resolve load or error so Promise.all always settles
+        //     img.onload = () => resolve({ img, success: true });
+        //     img.onerror = () => resolve({ img, success: false, card });
+        // }));
+
+        // // Wait for all images to attempt loading (parallel)
+        // const results = await Promise.all(loadPromises);
+
+        // // Append all successfully loaded imgs in one DOM update
+        // const frag = document.createDocumentFragment();
+        // results.forEach(r => {
+        //     if (r.success) frag.appendChild(r.img);
+        //     else console.warn('Image failed to load for card:', r.card);
+        // });
+
+        const frag = document.createDocumentFragment();
+
+        cards.forEach(card => {
             const img = document.createElement('img');
             img.className = 'card';
             img.alt = card.card_set_id;
+            
+            // Add native lazy loading
+            // This acts as a "concurrency limiter" by only fetching what is needed
+            img.loading = 'lazy'; 
+            
             img.src = card.card_image;
 
-            // Resolve load or error so Promise.all always settles
-            img.onload = () => resolve({ img, success: true });
-            img.onerror = () => resolve({ img, success: false, card });
-        }));
-
-        // Wait for all images to attempt loading (parallel)
-        const results = await Promise.all(loadPromises);
-
-        // Append all successfully loaded imgs in one DOM update
-        const frag = document.createDocumentFragment();
-        results.forEach(r => {
-            if (r.success) frag.appendChild(r.img);
-            else console.warn('Image failed to load for card:', r.card);
+            // Adds a fade-in effect when the image actually loads
+            img.onload = () => img.classList.add('loaded');
+            
+            frag.appendChild(img);
         });
 
         const container = document.getElementById('card-container');

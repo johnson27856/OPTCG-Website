@@ -23,7 +23,7 @@ body {
 .panes {
     display: flex;
     width: 100%;
-    height: calc(100vh - 64px); /* leave space for nav (min-height:64px) */
+    height: calc(100vh - 76px); /* leave space for nav (min-height:76px) */
     box-sizing: border-box;
 }
 
@@ -84,6 +84,13 @@ body {
     object-fit: contain;
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+
+.card.loaded {
+    opacity: 1;
 }
 
 /* Add a black background color to the top navigation */
@@ -97,7 +104,7 @@ body {
     gap: 12px;
     flex-wrap: nowrap; /* prevent links from wrapping */
     flex: 0 0 auto; /* don't let nav shrink */
-    min-height: 64px;
+    min-height: 76px;
     overflow-x: auto; /* allow horizontal scroll on very small screens */
 }
 
@@ -137,8 +144,12 @@ body {
     font-size: 16px;
 }
 
+#loading {
+    padding: 10px;
+}
+
 .error {
-    color: red;
+    color: maroon;
     padding: 10px;
 }
 
