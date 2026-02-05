@@ -138,6 +138,7 @@ function initResizer() {
         // Checks if user is on desktop or mobile
         const clientX = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
         const rect = panes.getBoundingClientRect();
+        // rect.left = distance from left edge of the screen to start of panes
         let newWidth = clientX - rect.left;
         const maxWidth = window.innerWidth * maxWidthPct;
         // Prevents the panel from getting too big or too small
