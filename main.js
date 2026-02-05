@@ -1,4 +1,4 @@
-// Global variables
+// Global variable(s)
 const setIds = [
     'OP-01',
     'OP-02',
@@ -39,7 +39,7 @@ async function loadSet(setId) {
         // // Wait for all images to attempt loading (parallel)
         // const results = await Promise.all(loadPromises);
 
-        // // Append all successfully loaded imgs in one DOM update
+        // // Append all successfully loaded images in one DOM update
         // const frag = document.createDocumentFragment();
         // results.forEach(r => {
         //     if (r.success) frag.appendChild(r.img);
@@ -54,12 +54,12 @@ async function loadSet(setId) {
             img.alt = card.card_set_id;
             
             // Add native lazy loading
-            // This acts as a "concurrency limiter" by only fetching what is needed
+            // Acts as a "concurrency limiter" by only fetching what is needed
             img.loading = 'lazy'; 
             
             img.src = card.card_image;
 
-            // Adds a fade-in effect when the image actually loads
+            // Links with css fade-in effect when the image actually loads
             img.onload = () => img.classList.add('loaded');
             
             frag.appendChild(img);
@@ -107,6 +107,7 @@ function populateSetDropdown() {
         opt.value = id;
         opt.textContent = id;
 
+        // For selected set persistence
         if (id === selectedSet) {
             opt.selected = true;
         }
@@ -130,23 +131,21 @@ function initResizer() {
     const panes = document.querySelector('.panes');
     if (!resizer || !leftPanel || !panes) return;
 
-    let isResizing = false;
     const minWidth = 200;
     const maxWidthPct = 0.9; // 90% of window
 
     function onPointerMove(e) {
-        if (!isResizing) return;
+        // Checks if user is on desktop or mobile
         const clientX = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
         const rect = panes.getBoundingClientRect();
         let newWidth = clientX - rect.left;
         const maxWidth = window.innerWidth * maxWidthPct;
+        // Prevents the panel from getting too big or too small
         newWidth = Math.max(minWidth, Math.min(newWidth, maxWidth));
         leftPanel.style.width = newWidth + 'px';
     }
 
     function stopResize() {
-        if (!isResizing) return;
-        isResizing = false;
         document.body.style.cursor = '';
         resizer.classList.remove('active');
         document.removeEventListener('mousemove', onPointerMove);
@@ -155,9 +154,9 @@ function initResizer() {
         document.removeEventListener('touchend', stopResize);
     }
 
-    resizer.addEventListener('mousedown', function (e) {
+    // For desktop
+    resizer.addEventListener('mousedown', function(e) {
         e.preventDefault();
-        isResizing = true;
         document.body.style.cursor = 'ew-resize';
         resizer.classList.add('active');
         document.addEventListener('mousemove', onPointerMove);
@@ -165,9 +164,8 @@ function initResizer() {
     });
 
     // For mobile
-    resizer.addEventListener('touchstart', function (e) {
+    resizer.addEventListener('touchstart', function(e) {
         e.preventDefault();
-        isResizing = true;
         document.body.style.cursor = 'ew-resize';
         resizer.classList.add('active');
         document.addEventListener('touchmove', onPointerMove, { passive: false });
@@ -181,6 +179,5 @@ document.addEventListener('DOMContentLoaded', () => {
     const select = document.getElementById('set-select');
     const defaultSet = select ? select.value : setIds[0];
     loadSet(defaultSet);
-
     initResizer();
 });
