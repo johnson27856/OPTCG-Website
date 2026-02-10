@@ -59,8 +59,19 @@ async function loadSet(setId) {
             
             img.src = card.card_image;
 
+            // Store card data for easy access on mouse hover
+            img.dataset.name = card.card_name;
+            img.dataset.price = card.market_price;
+            img.dataset.rarity = card.rarity;
+
             // Links with css fade-in effect when the image actually loads
             img.onload = () => img.classList.add('loaded');
+
+            // Add mouse hover listener
+            img.addEventListener('mouseenter', () => displayPreview(card));
+
+            // Clear image preview when mouse leaves
+            // img.addEventListener('mouseleave', () => clearPreview());
             
             frag.appendChild(img);
         });
@@ -74,6 +85,32 @@ async function loadSet(setId) {
         container.innerHTML = `<p class="error">Failed to load ${setId}: ${err.message}</p>`;
         console.error(err);
     }
+}
+
+function displayPreview(card) {
+    const rightPanel = document.getElementById('right-panel');
+    if (!rightPanel) return;
+
+    rightPanel.innerHTML = `
+        <div class="preview-container">
+            <img src="${card.card_image}" alt="${card.card_name}" class="preview-image">
+            <div class="card-stats">
+                <h2>${card.card_name}</h2>
+                <p><strong>Rarity:</strong> ${card.rarity}</p>
+                <p><strong>Set-ID:</strong> ${card.card_set_id}</p>
+                <div class="price-tag">
+                    <p><strong>Market Price:</strong> $${card.market_price}</p>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function clearPreview() {
+    const rightPanel = document.getElementById('right-panel');
+    if (!rightPanel) return;
+
+    rightPanel.innerHTML = '';
 }
 
 function showLoading(message) {
