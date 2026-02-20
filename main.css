@@ -7,7 +7,7 @@ body {
     padding: 0;
     min-height: 100vh;
 
-    /* Use flex column so header + controls size naturally
+    /* Use flex column so top nav + panes size naturally
     and the scrollable area fills the remaining space */
     display: flex;
     flex-direction: column;
@@ -20,7 +20,6 @@ body {
     overflow: visible;
 }
 
-/* Add a black background color to the top navigation */
 .topnav {
     background-color: #333;
     overflow: hidden;
@@ -29,10 +28,10 @@ body {
     align-items: center;
     justify-content: center;
     gap: 12px;
-    flex-wrap: nowrap; /* prevent links from wrapping */
-    flex: 0 0 auto; /* don't let nav shrink */
+    flex-wrap: nowrap;  /* prevent links from wrapping */
+    flex: 0 0 auto;     /* don't let nav shrink */
     min-height: 76px;
-    overflow-x: auto; /* allow horizontal scroll on very small screens */
+    overflow-x: auto;   /* allow horizontal scroll on very small screens */
 }
 
 /* Style the links inside the navigation bar */
@@ -99,7 +98,7 @@ body {
 }
 
 .preview-image{
-    /* full-size card dimensions are 600x838 or ~71.599% */
+    /* Full-size card dimensions are 600x838 or ~71.599% */
     min-width: 143px;
     min-height: 200px;
     max-width: 50%;
@@ -169,8 +168,12 @@ body {
     flex: 1 1 auto;
     box-sizing: border-box;
 
-    /* Use CSS grid so cards wrap responsively and scale on resize */
+    /* CSS grid lets cards wrap responsively and scale on resize */
     display: grid;
+    /* repeat() applies sizing rules repeatedly to generate columns,
+    auto-fill automatically fits as many columns as possible into a row,
+    and minmax(160px, 1fr) prevents the card images from shrinking below
+    160px while dividing up any leftover space equally amongst columns */
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 10px;
     align-content: start;
@@ -211,7 +214,7 @@ body {
 /* Container for simple pages (News, About, Contact) */
 .content-container {
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.9); /* Readable background */
+    background-color: rgba(255, 255, 255, 0.9); /* readable background */
     margin: 20px;
     border-radius: 8px;
     max-width: 800px;
