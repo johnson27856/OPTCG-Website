@@ -15,6 +15,8 @@ const setIds = [
     'OP-13'
 ];
 
+let lockedCard = null; // tracks the currently locked card
+
 // Loads all cards in the specified set
 async function loadSet(setId) {
     showLoading(`Loading ${setId}...`);
@@ -25,6 +27,7 @@ async function loadSet(setId) {
         if (!res.ok) throw new Error(`Set request failed: ${res.status}`);
 
         const cards = await res.json(); // expect an array of card objects
+
         // const loadPromises = cards.map(card => new Promise(resolve => {
         //     const img = document.createElement('img');
         //     img.className = 'card';
@@ -67,11 +70,36 @@ async function loadSet(setId) {
             // Links with css fade-in effect when the image actually loads
             img.onload = () => img.classList.add('loaded');
 
-            // Add mouse hover listener
-            img.addEventListener('mouseenter', () => displayPreview(card));
+            // Add click listener to toggle lock/highlight
+            img.addEventListener('click', () => {
+                if (lockedCard === card) {
+                    // Unlock: remove highlight and clear preview
+                    lockedCard = null;
+                    img.classList.remove('selected');
+                    clearPreview();
+                }
+                else {
+                    // Lock: remove highlight from any other card, highlight this one, and show its preview
+                    document.querySelectorAll('.card.selected').forEach(c => c.classList.remove('selected'));
+                    img.classList.add('selected');
+                    lockedCard = card;
+                    displayPreview(card);
+                }
+            });
+
+            // Add mouse hover listener (only changes preview if not locked)
+            img.addEventListener('mouseenter', () => {
+                if (!lockedCard) {
+                    displayPreview(card);
+                }
+            });
 
             // Clear image preview when mouse leaves
-            // img.addEventListener('mouseleave', () => clearPreview());
+            img.addEventListener('mouseleave', () => {
+                if (!lockedCard) {
+                    clearPreview();
+                }
+            });
             
             frag.appendChild(img);
         });

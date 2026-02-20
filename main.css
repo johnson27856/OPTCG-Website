@@ -173,7 +173,7 @@ body {
 
 /* Deck builder scrolling */
 .scrollable {
-    padding: 0px 10px 10px 10px;
+    padding: 2.5px 10px 10px 10px;
 
     /* Fill remaining vertical space inside left-panel */
     flex: 1 1 auto;
@@ -181,7 +181,7 @@ body {
 
     /* CSS grid lets cards wrap responsively and scale on resize */
     display: grid;
-    /* repeat() applies sizing rules repeatedly to generate columns,
+    /* So, repeat() applies sizing rules repeatedly to generate columns,
     auto-fill automatically fits as many columns as possible into a row,
     and minmax(160px, 1fr) prevents the card images from shrinking below
     160px while dividing up any leftover space equally amongst columns */
@@ -207,6 +207,11 @@ body {
 
     opacity: 0;
     transition: opacity 0.3s ease-in;
+}
+
+.card.selected {
+    outline: 3px solid #007bff;  /* blue outline for highlight */
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.8);  /* subtle glow */
 }
 
 .card.loaded {
