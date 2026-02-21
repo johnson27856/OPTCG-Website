@@ -214,8 +214,8 @@ function initResizer() {
     const panes = document.querySelector('.panes');
     if (!resizer || !leftPanel || !panes) return;
 
-    const minWidth = 200;
-    const maxWidthPct = 0.9; // 90% of window
+    const minWidth = 220;
+    const maxWidthPct = 0.725; // 72.5% of window
 
     function onPointerMove(e) {
         // Checks if user is on desktop or mobile and assigns to clientX accordingly
