@@ -69,10 +69,11 @@ async function loadSet(setId) {
             
             img.src = card.card_image;
 
-            // Store card data for easy access on mouse hover
+            // Store card data for easy access
             img.dataset.name = card.card_name;
-            img.dataset.price = card.market_price;
             img.dataset.rarity = card.rarity;
+            img.dataset.setId = card.card_set_id;
+            img.dataset.price = card.market_price;
 
             // Links with css fade-in effect when the image actually loads
             img.onload = () => img.classList.add('loaded');
