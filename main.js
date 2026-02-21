@@ -12,7 +12,12 @@ const setIds = [
     'OP-10',
     'OP-11',
     'OP-12',
-    'OP-13'
+    'OP-13',
+    'OP14-EB04',
+    'EB-01',
+    'EB-02',
+    'PRB-01',
+    'PRB-02'
 ];
 
 let lockedCard = null;
