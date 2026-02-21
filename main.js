@@ -21,6 +21,7 @@ const setIds = [
 ];
 
 let lockedCard = null;
+let currentPreviewCard = null;
 // ----------- Global variable(s) end -----------
 
 // Loads all cards in the specified set
@@ -110,6 +111,9 @@ async function loadSet(setId) {
             frag.appendChild(img);
         });
 
+        // Reset state when loading a new set
+        clearPreview();
+        lockedCard = null;
         const container = document.getElementById('card-container');
         container.innerHTML = '';
         container.appendChild(frag);
@@ -122,6 +126,11 @@ async function loadSet(setId) {
 }
 
 function displayPreview(card) {
+    // Skip image/stats rendering if already showing this card
+    if (currentPreviewCard === card) return;
+
+    currentPreviewCard = card;
+
     const rightPanel = document.getElementById('right-panel');
     if (!rightPanel) return;
 
@@ -141,6 +150,8 @@ function displayPreview(card) {
 }
 
 function clearPreview() {
+    currentPreviewCard = null;
+
     const rightPanel = document.getElementById('right-panel');
     if (!rightPanel) return;
 
