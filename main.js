@@ -1,4 +1,4 @@
-// Global variable(s)
+// ---------- Global variable(s) begin ----------
 const setIds = [
     'OP-01',
     'OP-02',
@@ -15,7 +15,8 @@ const setIds = [
     'OP-13'
 ];
 
-let lockedCard = null; // tracks the currently locked card
+let lockedCard = null;
+// ----------- Global variable(s) end -----------
 
 // Loads all cards in the specified set
 async function loadSet(setId) {
@@ -56,8 +57,8 @@ async function loadSet(setId) {
             img.className = 'card';
             img.alt = card.card_set_id;
             
-            // Add native lazy loading
-            // Acts as a "concurrency limiter" by only fetching what is needed
+            /* Native lazy loading acts as a "concurrency limiter"
+            by only fetching and loading what is needed */
             img.loading = 'lazy'; 
             
             img.src = card.card_image;
@@ -87,14 +88,14 @@ async function loadSet(setId) {
                 }
             });
 
-            // Add mouse hover listener (only changes preview if not locked)
+            // Add mouse hover listener (only changes preview if no card is locked)
             img.addEventListener('mouseenter', () => {
                 if (!lockedCard) {
                     displayPreview(card);
                 }
             });
 
-            // Clear image preview when mouse leaves
+            // Clear image preview when mouse leaves (only clears if no card is locked)
             img.addEventListener('mouseleave', () => {
                 if (!lockedCard) {
                     clearPreview();
@@ -200,7 +201,7 @@ function initResizer() {
     const maxWidthPct = 0.9; // 90% of window
 
     function onPointerMove(e) {
-        // Checks if user is on desktop or mobile
+        // Checks if user is on desktop or mobile and assigns to clientX accordingly
         const clientX = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
         const rect = panes.getBoundingClientRect();
         // rect.left = distance from left edge of the screen to start of panes
