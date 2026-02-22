@@ -254,6 +254,10 @@ function sortCards(criterion) {
         loadSet(currentSet);
         return;
     }
+
+    // Reset sortedCards to discard previous sorts
+    sortedCards = [...allCards]
+
     sortedCards.sort((a, b) => {
         let aVal, bVal;
         switch (criterion) {
