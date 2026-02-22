@@ -20,8 +20,13 @@ const setIds = [
     'PRB-02'
 ];
 
+let currentSet = null;
+
 let lockedCard = null;
 let currentPreviewCard = null;
+
+let allCards = [];
+let sortedCards = [];
 // ----------- Global variable(s) end -----------
 
 // Loads all cards in the specified set
@@ -34,6 +39,8 @@ async function loadSet(setId) {
         if (!res.ok) throw new Error(`Set request failed: ${res.status}`);
 
         const cards = await res.json(); // expect an array of card objects
+        allCards = cards;               // all cards in the specified set
+        sortedCards = [...allCards];    // makes a shallow copy of allCards
 
         // const loadPromises = cards.map(card => new Promise(resolve => {
         //     const img = document.createElement('img');
@@ -67,13 +74,20 @@ async function loadSet(setId) {
             by only fetching and loading what is needed */
             img.loading = 'lazy'; 
             
-            img.src = card.card_image;
+            if (card.card_image == null) {
+                img.src = 'images/unable-to-load.png';
+            }
+            else {
+                img.src = card.card_image;
+            }
 
             // Store card data for easy access
             img.dataset.name = card.card_name;
             img.dataset.rarity = card.rarity;
             img.dataset.setId = card.card_set_id;
             img.dataset.price = card.market_price;
+            img.dataset.color = card.card_color;
+            img.dataset.cost = card.card_cost;
 
             // Links with css fade-in effect when the image actually loads
             img.onload = () => img.classList.add('loaded');
@@ -115,6 +129,8 @@ async function loadSet(setId) {
         // Reset state when loading a new set
         clearPreview();
         lockedCard = null;
+        currentSet = setId;
+
         const container = document.getElementById('card-container');
         container.innerHTML = '';
         container.appendChild(frag);
@@ -135,6 +151,10 @@ function displayPreview(card) {
     const rightPanel = document.getElementById('right-panel');
     if (!rightPanel) return;
 
+    if (card.card_image == null) {
+        card.card_image = 'images/unable-to-load.png';
+    }
+    
     rightPanel.innerHTML = `
         <div class="preview-container">
             <img src="${card.card_image}" alt="${card.card_name}" class="preview-image">
@@ -169,42 +189,188 @@ function showLoading(message) {
     container.appendChild(p);
 }
 
-function populateSetDropdown() {
+// Render the given list of cards to the container
+function renderCards(cardsToRender) {
+    const container = document.getElementById('card-container');
+    container.innerHTML = '';
+    const frag = document.createDocumentFragment();
+
+    cardsToRender.forEach(card => {
+        // Recreate the img element (follows loadSet() logic)
+        const img = document.createElement('img');
+        img.className = 'card';
+        img.alt = card.card_set_id;
+        img.loading = 'lazy';
+        if (card.card_image == null) {
+            img.src = 'images/unable-to-load.png';
+        }
+        else {
+            img.src = card.card_image;
+        }
+        img.dataset.name = card.card_name;
+        img.dataset.rarity = card.rarity;
+        img.dataset.setId = card.card_set_id;
+        img.dataset.price = card.market_price;
+        img.dataset.color = card.color;
+        img.dataset.cost = card.cost;
+
+        img.onload = () => img.classList.add('loaded');
+
+        img.addEventListener('click', () => {
+            if (lockedCard === card) {
+                lockedCard = null;
+                img.classList.remove('selected');
+                clearPreview();
+            }
+            else {
+                document.querySelectorAll('.card.selected').forEach(c => c.classList.remove('selected'));
+                img.classList.add('selected');
+                lockedCard = card;
+                displayPreview(card);
+            }
+        });
+
+        img.addEventListener('mouseenter', () => {
+            if (!lockedCard) {
+                displayPreview(card);
+            }
+        });
+
+        img.addEventListener('mouseleave', () => {
+            if (!lockedCard) {
+                clearPreview();
+            }
+        });
+
+        frag.appendChild(img);
+    });
+
+    container.appendChild(frag);
+}
+
+// Sort cards based on selected criterion
+function sortCards(criterion) {
+    if (criterion === 'none') {
+        loadSet(currentSet);
+        return;
+    }
+    sortedCards.sort((a, b) => {
+        let aVal, bVal;
+        switch (criterion) {
+            case 'card_name':
+                aVal = a.card_name.toLowerCase();
+                bVal = b.card_name.toLowerCase();
+                return aVal.localeCompare(bVal);
+            case 'rarity':
+                aVal = a.rarity.toLowerCase();
+                bVal = b.rarity.toLowerCase();
+                return aVal.localeCompare(bVal);
+            case 'market_price':
+                aVal = parseFloat(a.market_price);
+                bVal = parseFloat(b.market_price);
+                return bVal - aVal;
+            case 'card_color':
+                aVal = a.card_color.toLowerCase();
+                bVal = b.card_color.toLowerCase();
+                return aVal.localeCompare(bVal);
+            case 'card_cost':
+                aVal = parseInt(a.card_cost);
+                bVal = parseInt(b.card_cost);
+                return bVal - aVal;
+            default:
+                return 0;
+        }
+    });
+    renderCards(sortedCards);
+}
+
+function initializeControls() {
     const controls = document.getElementById('set-controls');
     if (!controls) return;
 
-    // Clear any previous controls
+    // Clear the controls div to start fresh
     controls.innerHTML = '';
 
-    const label = document.createElement('label');
-    label.htmlFor = 'set-select';
-    label.textContent = 'Select set: ';
+    // Helper function to create a label + select pair
+    function createDropdown(id, labelText, options, defaultValue, changeHandler) {
+        const label = document.createElement('label');
+        label.htmlFor = id;
+        label.textContent = labelText;
 
-    const select = document.createElement('select');
-    select.id = 'set-select';
+        const select = document.createElement('select');
+        select.id = id;
 
-    const selectedSet = localStorage.getItem('selectedSet');
+        options.forEach(opt => {
+            const option = document.createElement('option');
+            option.value = opt.value;
+            option.textContent = opt.text;
 
-    setIds.forEach(id => {
-        const opt = document.createElement('option');
-        opt.value = id;
-        opt.textContent = id;
+            // For selected set persistence
+            if (opt.value === defaultValue) {
+                option.selected = true;
+            }
 
-        // For selected set persistence
-        if (id === selectedSet) {
-            opt.selected = true;
-        }
+            select.appendChild(option);
+        });
 
-        select.appendChild(opt);
-    });
+        select.addEventListener('change', changeHandler);
 
-    select.addEventListener('change', (e) => {
+        controls.appendChild(label);
+        controls.appendChild(select);
+    }
+
+    // Set dropdown
+    const selectedSet = localStorage.getItem('selectedSet') || setIds[0];
+    const setOptions = setIds.map(id => ({ value: id, text: id }));
+    createDropdown('set-select', 'Select set: ', setOptions, selectedSet, (e) => {
         localStorage.setItem('selectedSet', e.target.value);
+        sortSelect = document.getElementById('sort-select');
+        sortSelect.value = 'none';
         loadSet(e.target.value);
     });
 
-    controls.appendChild(label);
-    controls.appendChild(select);
+    // Sort dropdown
+    const sortOptions = [
+        { value: 'none', text: '-- Select --' },
+        { value: 'card_name', text: 'Name' },
+        { value: 'rarity', text: 'Rarity' },
+        { value: 'market_price', text: 'Price' },
+        { value: 'card_color', text: 'Color' },
+        { value: 'card_cost', text: 'Cost' }
+    ];
+    createDropdown('sort-select', 'Sort by: ', sortOptions, 'none', (e) => {
+        sortCards(e.target.value);
+    });
+
+    // const label = document.createElement('label');
+    // label.htmlFor = 'set-select';
+    // label.textContent = 'Select set: ';
+
+    // const select = document.createElement('select');
+    // select.id = 'set-select';
+
+    // const selectedSet = localStorage.getItem('selectedSet');
+
+    // setIds.forEach(id => {
+    //     const opt = document.createElement('option');
+    //     opt.value = id;
+    //     opt.textContent = id;
+
+    //     // For selected set persistence
+    //     if (id === selectedSet) {
+    //         opt.selected = true;
+    //     }
+
+    //     select.appendChild(opt);
+    // });
+
+    // select.addEventListener('change', (e) => {
+    //     localStorage.setItem('selectedSet', e.target.value);
+    //     loadSet(e.target.value);
+    // });
+
+    // controls.appendChild(label);
+    // controls.appendChild(select);
 }
 
 // Make the left panel resizable by dragging the vertical resizer
@@ -259,7 +425,7 @@ function initResizer() {
 
 // Initialize after DOM loads
 document.addEventListener('DOMContentLoaded', () => {
-    populateSetDropdown();
+    initializeControls();
     const select = document.getElementById('set-select');
     const defaultSet = select ? select.value : setIds[0];
     loadSet(defaultSet);
