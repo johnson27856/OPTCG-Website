@@ -214,6 +214,11 @@ function renderCards(cardsToRender) {
         img.dataset.color = card.color;
         img.dataset.cost = card.cost;
 
+        // Keeps the locked card highlighted
+        if (lockedCard === card) {
+            img.classList.add('selected');
+        }
+
         img.onload = () => img.classList.add('loaded');
 
         img.addEventListener('click', () => {
@@ -251,7 +256,7 @@ function renderCards(cardsToRender) {
 // Sort cards based on selected criterion
 function sortCards(criterion) {
     if (criterion === 'none') {
-        loadSet(currentSet);
+        renderCards(allCards);
         return;
     }
 
