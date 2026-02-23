@@ -6,9 +6,6 @@
         - Some of the card image previews show with sharp white edges rather than
         the slick rounded edge look. This might have something to do with the API
         storing .pngs and .jpgs but requires further investigation.
-        - Locking a card and sorting by another criteria removes the card's blue
-        highlight but the image preview and card stats persist. Either find a way
-        to keep the card highlighted or clear the display when switching sorts.
 */
 
 html, body {
