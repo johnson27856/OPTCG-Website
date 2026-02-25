@@ -211,8 +211,8 @@ function renderCards(cardsToRender) {
         img.dataset.rarity = card.rarity;
         img.dataset.setId = card.card_set_id;
         img.dataset.price = card.market_price;
-        img.dataset.color = card.color;
-        img.dataset.cost = card.cost;
+        img.dataset.color = card.card_color;
+        img.dataset.cost = card.card_cost;
 
         // Keeps the locked card highlighted
         if (lockedCard === card) {
@@ -283,8 +283,8 @@ function sortCards(criterion) {
                 bVal = b.card_color.toLowerCase();
                 return aVal.localeCompare(bVal);
             case 'card_cost':
-                aVal = parseInt(a.card_cost);
-                bVal = parseInt(b.card_cost);
+                aVal = parseInt(a.card_cost) || 0;
+                bVal = parseInt(b.card_cost) || 0;
                 return bVal - aVal;
             default:
                 return 0;
