@@ -329,10 +329,10 @@ function initializeControls() {
     }
 
     // Set dropdown
-    const selectedSet = localStorage.getItem('selectedSet') || setIds[0];
+    const selectedSet = sessionStorage.getItem('selectedSet') || setIds[0];
     const setOptions = setIds.map(id => ({ value: id, text: id }));
     createDropdown('set-select', 'Select set: ', setOptions, selectedSet, (e) => {
-        localStorage.setItem('selectedSet', e.target.value);
+        sessionStorage.setItem('selectedSet', e.target.value);
         sortSelect = document.getElementById('sort-select');
         sortSelect.value = 'none';
         loadSet(e.target.value);
