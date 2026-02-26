@@ -111,6 +111,7 @@ async function loadSet(setId) {
 
             // Add mouse hover listener (only changes preview if no card is locked)
             img.addEventListener('mouseenter', () => {
+                img.classList.add('hovered');
                 if (!lockedCard) {
                     displayPreview(card);
                 }
@@ -118,6 +119,7 @@ async function loadSet(setId) {
 
             // Clear image preview when mouse leaves (only clears if no card is locked)
             img.addEventListener('mouseleave', () => {
+                img.classList.remove('hovered');
                 if (!lockedCard) {
                     clearPreview();
                 }
@@ -236,12 +238,14 @@ function renderCards(cardsToRender) {
         });
 
         img.addEventListener('mouseenter', () => {
+            img.classList.add('hovered');
             if (!lockedCard) {
                 displayPreview(card);
             }
         });
 
         img.addEventListener('mouseleave', () => {
+            img.classList.remove('hovered');
             if (!lockedCard) {
                 clearPreview();
             }

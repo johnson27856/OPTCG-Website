@@ -82,7 +82,7 @@ body {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    width: 41.15%;
+    width: 37%;
     min-width: 220px;
     max-width: 72.5%;
     box-sizing: border-box;
@@ -214,6 +214,11 @@ body {
 }
 
 .card.selected {
+    outline: 3px solid #007bff;  /* blue outline for highlight */
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.8);  /* subtle glow */
+}
+
+.card.hovered {
     outline: 3px solid #007bff;  /* blue outline for highlight */
     box-shadow: 0 0 10px rgba(0, 123, 255, 0.8);  /* subtle glow */
 }
