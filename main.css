@@ -41,7 +41,7 @@ body {
     flex-wrap: nowrap;  /* prevent links from wrapping */
     flex: 0 0 auto;     /* don't let nav shrink */
     min-height: 76px;
-    min-width: 100vh;
+    min-width: 100vw;
     overflow-x: auto;   /* allow horizontal scroll on very small screens */
 }
 
@@ -238,11 +238,15 @@ body {
 
 /* Container for simple pages (News, About, Contact) */
 .content-container {
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.9); /* readable background */
     margin: 20px;
-    border-radius: 8px;
-    max-width: 800px;
+    padding: 20px 40px;
+    background-color: rgba(255, 255, 255, 0.8); /* readable background */
+    border-radius: 22px;
+    width: 33%;
+}
+
+.content-container p, li {
+    line-height: 1.6;
 }
 
 @keyframes fadeIn {
