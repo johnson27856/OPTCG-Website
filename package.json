@@ -1,1 +1,21 @@
-{}
+{
+  "name": "optcg-website",
+  "version": "1.0.0",
+  "description": "A web-based card browser for the One Piece Trading Card Game. This project focuses on high-performance data rendering and a clean, modern user interface.",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnson27856/OPTCG-Website.git"
+  },
+  "keywords": [],
+  "author": "johnson27856",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/johnson27856/OPTCG-Website/issues"
+  },
+  "homepage": "https://github.com/johnson27856/OPTCG-Website#readme"
+}
