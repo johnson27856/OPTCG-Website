@@ -23,7 +23,7 @@ body {
     flex-direction: column;
 
     background-image: url('images/luffy.jpg');
-    /* background-color: gray; */
+    background-color: #d1d1d1;
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
@@ -173,6 +173,14 @@ body {
 .controls select {
     padding: 2px;
     font-size: 16px;
+}
+
+.dropdown-group {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    white-space: nowrap;
+    gap: 5px;
 }
 
 /* Deck builder scrolling */

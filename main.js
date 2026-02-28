@@ -306,6 +306,9 @@ function initializeControls() {
 
     // Helper function to create a label + select pair
     function createDropdown(id, labelText, options, defaultValue, changeHandler) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'dropdown-group';
+
         const label = document.createElement('label');
         label.htmlFor = id;
         label.textContent = labelText;
@@ -328,8 +331,11 @@ function initializeControls() {
 
         select.addEventListener('change', changeHandler);
 
-        controls.appendChild(label);
-        controls.appendChild(select);
+        // Groups the label and select together as one dropdown object
+        wrapper.appendChild(label);
+        wrapper.appendChild(select);
+
+        controls.appendChild(wrapper);
     }
 
     // Set dropdown
