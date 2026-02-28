@@ -22,7 +22,7 @@ body {
     display: flex;
     flex-direction: column;
 
-    background-image: url('images/luffy.jpg');
+    background-image: url('../images/luffy.jpg');
     background-color: #d1d1d1;
     background-attachment: fixed;
     background-repeat: no-repeat;

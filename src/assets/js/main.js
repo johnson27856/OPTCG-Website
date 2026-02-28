@@ -75,7 +75,7 @@ async function loadSet(setId) {
             img.loading = 'lazy'; 
             
             if (card.card_image == null) {
-                img.src = 'images/unable-to-load.png';
+                img.src = 'assets/images/unable-to-load.png';
             }
             else {
                 img.src = card.card_image;
@@ -154,7 +154,7 @@ function displayPreview(card) {
     if (!rightPanel) return;
 
     if (card.card_image == null) {
-        card.card_image = 'images/unable-to-load.png';
+        card.card_image = 'assets/images/unable-to-load.png';
     }
     
     rightPanel.innerHTML = `
@@ -204,7 +204,7 @@ function renderCards(cardsToRender) {
         img.alt = card.card_set_id;
         img.loading = 'lazy';
         if (card.card_image == null) {
-            img.src = 'images/unable-to-load.png';
+            img.src = 'assets/images/unable-to-load.png';
         }
         else {
             img.src = card.card_image;
