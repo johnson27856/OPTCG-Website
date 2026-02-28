@@ -2,7 +2,7 @@
     Current Bug(s):
         - When window is resized to be small vertically, scrolling to the bottom
         reveals the scrollable container ends prematurely and does not connect to
-        the bottom edge of the viewport.
+        the bottom edge of the viewport. Same issue horizontally.
         - Some of the card image previews show with sharp white edges rather than
         the slick rounded edge look. This might have something to do with the API
         storing .pngs and .jpgs but requires further investigation.
