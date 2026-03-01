@@ -257,7 +257,7 @@ function renderCards(cardsToRender) {
     container.appendChild(frag);
 }
 
-// Sort cards based on selected criterion
+// Sort cards based on selected criteria
 function sortCards(criterion) {
     if (criterion === 'none') {
         renderCards(allCards);
@@ -405,11 +405,12 @@ function initResizer() {
     function onPointerMove(e) {
         // Checks if user is on desktop or mobile and assigns to clientX accordingly
         const clientX = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
-        const rect = panes.getBoundingClientRect();
-        // rect.left = distance from left edge of the screen to start of panes
+        const rect = panes.getBoundingClientRect(); // helps to make the code robust
+        /* rect.left = distance from left edge of the screen to start of panes; this
+        is used to account for differences caused by scrolling and margins/padding */
         let newWidth = clientX - rect.left;
         const maxWidth = window.innerWidth * maxWidthPct;
-        // Prevents the panel from getting too big or too small
+        // Prevents the left panel from getting too big or too small
         newWidth = Math.max(minWidth, Math.min(newWidth, maxWidth));
         leftPanel.style.width = newWidth + 'px';
     }
