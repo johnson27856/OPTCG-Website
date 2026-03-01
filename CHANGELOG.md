@@ -13,4 +13,5 @@
 ### Patch Notes:
 - Added a straw hat favicon
 - Added support for set EB-03!
+- Removed Luffy background for a cleaner UX
 - Fixed console warning regarding an unused link preload
