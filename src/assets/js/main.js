@@ -16,6 +16,7 @@ const setIds = [
     'OP14-EB04',
     'EB-01',
     'EB-02',
+    'EB-03',
     'PRB-01',
     'PRB-02'
 ];

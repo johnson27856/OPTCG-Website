@@ -22,8 +22,9 @@ body {
     display: flex;
     flex-direction: column;
 
-    background-image: url('../images/luffy.jpg');
-    background-color: #d1d1d1;
+    background-image: url('/Projects/OPTCG Website/src/assets/images/luffy-bg.jpg');
+    background-color: #5a5a5a;
+    background-position: 50% -2%;
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
@@ -33,6 +34,8 @@ body {
 .topnav {
     background-color: #333;
     overflow: hidden;
+    position: fixed;
+    z-index: 1000;
 
     display: flex;
     align-items: center;
@@ -76,6 +79,7 @@ body {
     /* Leave space for topnav (min-height: 76px) */
     height: calc(100vh - 76px);
     box-sizing: border-box;
+    margin-top: 76px;
 }
 
 .left-panel {
@@ -113,8 +117,10 @@ body {
     min-width: 143px;
     min-height: 200px;
     max-width: 50%;
-    max-height: 77%;
+    max-height: 80%;
     margin-top: auto;
+    /* border-radius: 22px;
+    border: 2px solid #007bff; */
 }
 
 .card-stats {
@@ -163,7 +169,7 @@ body {
     flex-wrap: wrap;
     gap: 10px;
     align-items: center;
-    z-index: 2;
+    z-index: 10;
 
     /* Keep it visible while the card list scrolls */
     position: sticky;
@@ -246,7 +252,7 @@ body {
 
 /* Container for simple pages (News, About, Contact) */
 .content-container {
-    margin: 20px;
+    margin: 96px 20px 20px 20px;
     padding: 20px 40px;
     background-color: rgba(255,255,255,0.8); /* readable background */
     border-radius: 22px;
