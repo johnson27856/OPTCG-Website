@@ -28,7 +28,9 @@ Developed by **Johnson Hwang**. This project serves as a practical application o
 │   └── contact.html    # contact page
 ├── CHANGELOG.md        # version history and feature tracking
 ├── package.json        # project metadata and dependencies
-└── vercel.json         # routing and rewrite configuration
+├── vercel.json         # vercel deploy configuration file
+├── README.md           # project overview and description
+└── LICENSE             # MIT license
 ```
 
 ## Project History
