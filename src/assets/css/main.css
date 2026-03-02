@@ -161,7 +161,7 @@ body {
 }
 
 .controls {
-    padding: 6px 16px;
+    padding: 6px 16px 0px 16px;
     background-color: rgba(128,128,128,0.9);
     width: 100%;
     box-sizing: border-box;
@@ -191,7 +191,7 @@ body {
 
 /* Deck builder scrolling */
 .scrollable {
-    padding: 2.5px 10px 10px 10px;
+    padding: 9px 10px 10px 10px;
 
     /* Fill remaining vertical space inside left-panel */
     flex: 1 1 auto;
@@ -230,11 +230,13 @@ body {
 .card.selected {
     outline: 3px solid #007bff;  /* blue outline for highlight */
     box-shadow: 0 0 10px rgba(0,123,255,0.8);  /* subtle glow */
+    border-radius: 9px;
 }
 
 .card.hovered {
     outline: 3px solid #007bff;  /* blue outline for highlight */
     box-shadow: 0 0 10px rgba(0,123,255,0.8);  /* subtle glow */
+    border-radius: 9px;
 }
 
 .card.loaded {
