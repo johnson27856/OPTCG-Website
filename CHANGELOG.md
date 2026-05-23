@@ -1,5 +1,10 @@
 # Changelog
 
+## [Version 1.2.0] (2026-05-22)
+
+### Patch Notes:
+- Added support for set OP-15!
+
 ## [Version 1.1.0] (2026-03-01)
 
 ### Patch Notes:
